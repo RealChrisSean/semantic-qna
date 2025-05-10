@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Semantic FAQ Assistant</title>
+  <!-- Import Google Icon Font for Materialize -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified Materialize CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <!-- Responsive viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+  <div class="container">
+    <h3 class="center-align">Semantic FAQ Assistant</h3>
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="material-icons prefix">search</i>
+        <input id="q" type="text" class="validate" />
+        <label for="q">Ask a question…</label>
+      </div>
+      <div class="col s12 center-align">
+        <button id="ask" class="btn waves-effect waves-light">
+          Ask
+          <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div id="out" class="col s12 card-panel grey lighten-4" style="min-height: 60px;"></div>
+    </div>
+  </div>
+  <!-- Compiled and minified Materialize JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.getElementById('ask').onclick = async () => {
+      const question = document.getElementById('q').value;
+      if (!question) return;
+      const res = await fetch('/query', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ question })
+      });
+      if (!res.ok) {
+        document.getElementById('out').textContent = 'No match found.';
+        return;
+      }
+      const { question: q, answer } = await res.json();
+      document.getElementById('out').textContent =
+        `Closest Q: ${q}\nAnswer: ${answer}`;
+    };
+  </script>
+</body>
+</html>
