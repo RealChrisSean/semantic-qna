@@ -1,6 +1,6 @@
 # Semantic FAQ CLI
 
-Think of this as your go-to command-line buddy that fetches answers based on what you *mean*—not just the exact words you type. Under the hood, it taps into TiDB Cloud’s vector columns and AWS Bedrock Titan-V2 embeddings, all wrapped up in pure Python.
+Think of this as your go-to command-line buddy that fetches answers based on what you *mean*—not just the exact words you type. Under the hood, it taps into [TiDB Cloud’s](https://auth.tidbcloud.com/login) vector columns and [AWS Bedrock Titan-V2 embeddings](https://docs.aws.amazon.com/bedrock/latest/userguide/titan-embedding-models.html), all wrapped up in pure Python.
 
 ---
 
