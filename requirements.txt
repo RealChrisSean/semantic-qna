@@ -1,0 +1,7 @@
+boto3
+fastapi
+uvicorn
+python-dotenv
+tidb-vector
+pydantic
+
