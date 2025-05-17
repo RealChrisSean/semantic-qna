@@ -37,7 +37,6 @@ pip install -r requirements.txt
 
 - `DATABASE_URL` – TiDB connection string
 - `AWS_REGION` – AWS region for Bedrock (defaults to `us-east-1`)
-
 ---
 
 ## 🌐 Web Interface
