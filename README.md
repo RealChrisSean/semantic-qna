@@ -27,15 +27,25 @@ Think of this as your go-to command-line buddy that fetches answers based on wha
 - A TiDB Cloud Serverless cluster (free tier works)  
 - Root CA at `/etc/ssl/cert.pem` (macOS default)
 
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Required Environment Variables
+
+- `DATABASE_URL` – TiDB connection string
+- `AWS_REGION` – AWS region for Bedrock (defaults to `us-east-1`)
 ---
 
 ## 🌐 Web Interface
 
 Prefer a web page over a terminal? Here’s how:
 
-1. **Install FastAPI & Uvicorn**  
+1. **Install dependencies**
    ```bash
-   pip install fastapi uvicorn
+   pip install -r requirements.txt
    ```
 
 2. **Check that `server.py` and `index.html` live in your project folder.**
