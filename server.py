@@ -1,13 +1,15 @@
 # server.py
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
+from pathlib import Path
 from pydantic import BaseModel
 from app import ingest_faqs, query_faq  # import your refactored functions
 
 app = FastAPI()
 @app.get("/", include_in_schema=False)
 async def read_index():
-    return FileResponse("index.html")
+    index_path = Path(__file__).resolve().parent / "index.html"
+    return FileResponse(index_path)
 client = None
 
 class QueryReq(BaseModel):
