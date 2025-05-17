@@ -1,0 +1,6 @@
+[
+  {"id": "1", "question": "What is your return policy?", "answer": "You can return items within 30 days."},
+  {"id": "2", "question": "How long does shipping take?", "answer": "Standard shipping takes 3–5 business days."},
+  {"id": "3", "question": "Do you ship internationally?", "answer": "Yes—we ship to over 35 countries."},
+  {"id": "4", "question": "How do I track my order?", "answer": "Check the tracking link in your confirmation email."}
+]

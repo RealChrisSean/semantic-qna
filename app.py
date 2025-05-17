@@ -3,6 +3,7 @@ app.py – minimal Bedrock-to-TiDB semantic Q&A demo
 """
 
 import os, json
+from pathlib import Path
 from dotenv import load_dotenv
 import boto3
 from typing import List
@@ -17,6 +18,7 @@ TIDB_CONN_STR = os.getenv("DATABASE_URL")
 
 VECTOR_DIM = 1024                              # Titan-V2 output size
 TABLE_NAME = "faqs"                            # create / recreate each run
+FAQ_FILE = os.getenv("FAQ_FILE", "faqs.json")  # FAQ data in JSON format
 # --------------------------------- #
 
 # optional: show which AWS creds boto3 is using
@@ -36,40 +38,27 @@ def bedrock_embed(text: str) -> List[float]:
     data = json.loads(resp["body"].read())
     return data["embeddingsByType"]["float"]      # 1024-element list
 
-def ingest_faqs():
-    """
-    Initialize TiDBVectorClient, create/recreate the table, and seed FAQs.
-    Returns the client instance.
-    """
+def ingest_faqs(file_path: str = FAQ_FILE):
+    """Create the table and load FAQs from a JSON file."""
     client = TiDBVectorClient(
         table_name          = TABLE_NAME,
         connection_string   = TIDB_CONN_STR,
         vector_dimension    = VECTOR_DIM,
-        drop_existing_table = True
+        drop_existing_table = True,
     )
-    # Single FAQ insert
-    qid = "1"
-    question = "What is your return policy?"
-    answer = "You can return items within 30 days."
-    vec = bedrock_embed(question)
-    client.insert(
-        ids        = [qid],
-        texts      = [question],
-        embeddings = [vec],
-        metadatas  = [{"answer": answer}],
-    )
-    # Bulk‐load additional FAQs
-    bulk = [
-        ("2", "How long does shipping take?", "Standard shipping takes 3–5 business days."),
-        ("3", "Do you ship internationally?",  "Yes—we ship to over 35 countries."),
-        ("4", "How do I track my order?",      "Check the tracking link in your confirmation email."),
-    ]
+
+    faq_path = Path(file_path)
+    with faq_path.open("r", encoding="utf-8") as f:
+        faqs = json.load(f)
+
     ids, texts, embs, metas = [], [], [], []
-    for fid, q, a in bulk:
-        ids.append(fid)
+    for row in faqs:
+        q = row["question"]
+        ids.append(row["id"])
         texts.append(q)
         embs.append(bedrock_embed(q))
-        metas.append({"answer": a})
+        metas.append({"answer": row["answer"]})
+
     client.insert(ids=ids, texts=texts, embeddings=embs, metadatas=metas)
     return client
 
@@ -105,48 +94,8 @@ def query_faq(question: str, client=None):
 # ----------------------------------------- #
 
 def main() -> None:
-    # ---------- 2.  TiDB Vector client ---------- #
-    client = TiDBVectorClient(
-        table_name         = TABLE_NAME,
-        connection_string  = TIDB_CONN_STR,
-        vector_dimension   = VECTOR_DIM,
-        drop_existing_table= True                 # recreate each run
-    )
-
-    # ---------- 3.  Ingest one FAQ ---------- #
-    qid      = "1"
-    question = "What is your return policy?"
-    answer   = "You can return items within 30 days."
-
-    vec = bedrock_embed(question)
-    client.insert(
-        ids        = [qid],
-        texts      = [question],
-        embeddings = [vec],
-        metadatas  = [{"answer": answer}],
-    )
-    print("✅  Inserted FAQ into TiDB Vector")
-
-    # ─── 3b. Bulk‐load additional FAQs ───────────────────── #
-    bulk = [
-        ("2", "How long does shipping take?", "Standard shipping takes 3–5 business days."),
-        ("3", "Do you ship internationally?",  "Yes—we ship to over 35 countries."),
-        ("4", "How do I track my order?",      "Check the tracking link in your confirmation email."),
-    ]
-    ids, texts, embs, metas = [], [], [], []
-    for fid, q, a in bulk:
-        ids.append(fid)
-        texts.append(q)
-        embs.append(bedrock_embed(q))
-        metas.append({"answer": a})
-    client.insert(
-        ids=ids,
-        texts=texts,
-        embeddings=embs,
-        metadatas=metas
-    )
-    print(f"🚀  Bulk‐loaded {len(bulk)} FAQs")
-    # ────────────────────────────────────────────────────── #
+    client = ingest_faqs()
+    print(f"🚀  Loaded FAQs from {FAQ_FILE}")
 
     # ---------- 4.  Interactive loop ---------- #
     while True:
