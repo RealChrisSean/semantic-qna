@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <title>Semantic FAQ Assistant</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     :root {
       --bg-light: #fff;
@@ -58,6 +59,7 @@
       flex-direction: column;
       text-align: center;
       gap: 2rem;
+      width: 100%;
     }
     h1 {
       margin: 0;
@@ -84,7 +86,7 @@
       background: var(--input-bg-dark);
       color: var(--fg-dark);
     }
-    .search-container button#ask {
+    .search-container button {
       background: var(--accent);
       color: #fff;
       border: none;
@@ -92,57 +94,90 @@
       font-size: 1rem;
       cursor: pointer;
     }
-    #out {
+    #history {
       margin-top: 1rem;
-      white-space: pre-wrap;
       max-width: 600px;
+      width: 100%;
       text-align: left;
     }
+    .history-item {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #ccc;
+    }
+    .error {
+      color: red;
+    }
   </style>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body data-theme="light">
-  <header>
-    <button id="theme-toggle" aria-label="Toggle theme">
-      <span id="theme-icon" class="material-icons">dark_mode</span>
-    </button>
-  </header>
-  <main>
-    <h1>Semantic FAQ Assistant</h1>
-    <div class="search-container">
-      <input id="q" type="text" placeholder="Ask about TiDB…" />
-      <button id="ask">Search</button>
-    </div>
-    <div id="out"></div>
-  </main>
-  <script>
-    const root = document.documentElement;
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
-    themeToggle.addEventListener('click', () => {
-      const current = root.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
-      root.setAttribute('data-theme', next);
-      themeIcon.textContent = next === 'light' ? 'dark_mode' : 'light_mode';
-    });
+  <div id="root"></div>
 
-    // Query handler
-    document.getElementById('ask').onclick = async () => {
-      const q = document.getElementById('q').value;
-      if (!q) return;
-      const res = await fetch('/query', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ question: q })
-      });
-      const out = document.getElementById('out');
-      if (!res.ok) {
-        out.textContent = 'No match found.';
-        return;
-      }
-      const { question, answer } = await res.json();
-      out.textContent = `Closest Q: ${question}\nAnswer: ${answer}`;
-    };
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function App() {
+      const [theme, setTheme] = React.useState('light');
+      const [q, setQ] = React.useState('');
+      const [history, setHistory] = React.useState([]);
+
+      React.useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+      }, [theme]);
+
+      const ask = async () => {
+        if (!q.trim()) return;
+        const res = await fetch('/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: q })
+        });
+        let entry;
+        if (!res.ok) {
+          entry = { input: q, error: 'No match found.' };
+        } else {
+          const data = await res.json();
+          entry = { input: q, question: data.question, answer: data.answer };
+        }
+        setHistory([entry, ...history]);
+        setQ('');
+      };
+
+      return (
+        <>
+          <header>
+            <button id="theme-toggle" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} aria-label="Toggle theme">
+              {theme === 'light' ? '🌙' : '🌞'}
+            </button>
+          </header>
+          <main>
+            <h1>Semantic FAQ Assistant</h1>
+            <div className="search-container">
+              <input value={q} onChange={e => setQ(e.target.value)} placeholder="Ask about TiDB…" />
+              <button onClick={ask}>Search</button>
+            </div>
+            <div id="history">
+              {history.map((item, idx) => (
+                <div key={idx} className="history-item">
+                  <div><strong>You:</strong> {item.input}</div>
+                  {item.error ? (
+                    <div className="error">{item.error}</div>
+                  ) : (
+                    <>
+                      <div><strong>Closest Q:</strong> {item.question}</div>
+                      <div><strong>Answer:</strong> {item.answer}</div>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </main>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
   </script>
 </body>
 </html>
