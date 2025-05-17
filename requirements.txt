@@ -6,3 +6,4 @@ tidb-vector
 pydantic
 sqlalchemy
 pymysql
+pytest
