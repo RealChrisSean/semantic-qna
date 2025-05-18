@@ -2,7 +2,7 @@
 import subprocess, time, requests, shutil, sys
 from rich.progress import Progress, BarColumn, TimeElapsedColumn
 
-PORT = 8001
+PORT = 8000
 CMD  = ["uvicorn", "server:app", "--reload", "--host", "0.0.0.0", "--port", str(PORT)]
 
 def server_ready():
