@@ -27,6 +27,7 @@ print("🔑  Using AWS identity:", sts.get_caller_identity()["Arn"])
 
 # ---------- 1.  Bedrock helper ---------- #
 def bedrock_embed(text: str) -> List[float]:
+    """Call AWS Bedrock to generate Titan-2 embeddings and return 1024 floats."""
     brt = boto3.client("bedrock-runtime", region_name=AWS_REGION)
     payload = json.dumps({"inputText": text})
     resp = brt.invoke_model(

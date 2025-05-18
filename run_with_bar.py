@@ -1,11 +1,24 @@
-# run_with_bar.py
-import subprocess, time, requests, shutil, sys
+"""Utility for launching the development server with a progress bar.
+
+This script starts the FastAPI application using ``uvicorn`` and displays a
+progress bar that updates until the server's health check endpoint responds
+successfully. It is primarily intended for use while developing so that you get
+immediate feedback about when the server is ready to accept requests.
+"""
+
+import subprocess
+import time
+import requests
+import shutil
+import sys
 from rich.progress import Progress, BarColumn, TimeElapsedColumn
 
 PORT = 8000
 CMD  = ["uvicorn", "server:app", "--reload", "--host", "0.0.0.0", "--port", str(PORT)]
 
 def server_ready():
+    """Check whether the development server has started successfully."""
+
     try:
         r = requests.get(f"http://127.0.0.1:{PORT}/health", timeout=0.1)
         return r.status_code == 200
@@ -13,6 +26,8 @@ def server_ready():
         return False
 
 def main():
+    """Start the dev server and display readiness progress."""
+
     start = time.perf_counter()
     proc  = subprocess.Popen(
         CMD,

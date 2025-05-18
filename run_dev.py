@@ -1,11 +1,24 @@
-# run_with_bar.py
-import subprocess, time, requests, shutil, sys
+"""Simplified script to start the development server.
+
+The script launches ``uvicorn`` with hot reload enabled and displays a small
+progress bar while waiting for the server's ``/health`` endpoint to return a
+successful response. It mirrors the behaviour of :mod:`run_with_bar` but with a
+minimal log output.
+"""
+
+import subprocess
+import time
+import requests
+import shutil
+import sys
 from rich.progress import Progress, BarColumn, TimeElapsedColumn
 
 PORT = 8000
 CMD  = ["uvicorn", "server:app", "--reload", "--host", "0.0.0.0", "--port", str(PORT)]
 
 def server_ready():
+    """Return ``True`` once the local server responds successfully."""
+
     try:
         r = requests.get(f"http://127.0.0.1:{PORT}/health", timeout=0.1)
         return r.status_code == 200
@@ -13,6 +26,8 @@ def server_ready():
         return False
 
 def main():
+    """Run the dev server and wait for it to become available."""
+
     start = time.perf_counter()
     proc  = subprocess.Popen(CMD, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 

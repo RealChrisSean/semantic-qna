@@ -14,8 +14,10 @@ async def lifespan(app: FastAPI):
     # (Optional) Place any shutdown logic here
 
 app = FastAPI(lifespan=lifespan)
+
 @app.get("/", include_in_schema=False)
 async def read_index():
+    """Serve the index page via **GET /** and return the HTML response."""
     index_path = Path(__file__).resolve().parent / "index.html"
     return FileResponse(index_path)
 client = None
@@ -25,6 +27,7 @@ class QueryReq(BaseModel):
 
 @app.post("/query")
 def ask(req: QueryReq):
+    """POST /query to return the best FAQ answer or a 404 if none match."""
     res = query_faq(req.question, client)
     if not res["question"]:
         raise HTTPException(404, "No semantic match found")
@@ -32,4 +35,5 @@ def ask(req: QueryReq):
 
 @app.get("/health")
 def health():
+    """Simple **GET /health** endpoint returning a status message."""
     return {"status": "ok"}
