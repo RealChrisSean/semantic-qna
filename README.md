@@ -20,7 +20,7 @@ Think of this as your go-to command-line buddy that fetches answers based on wha
 
 ---
 
-## 🛠️ Prerequisites
+## 🛠️ Quick Start Prerequisites
 
 - **macOS** with **Python 3.8+**  
 - AWS CLI v2 configured (`aws configure`)  
@@ -35,7 +35,7 @@ pip install -r requirements.txt
 
 ### Required Environment Variables
 
-Create a `.env` file based on the provided template and fill in your own values:
+Create a `.env` file based on the .env.example template and fill in your own values:
 
 ```bash
 cp .env.example .env
