@@ -8,3 +8,5 @@ sqlalchemy
 pymysql
 pytest
 httpx
+rich
+requests
