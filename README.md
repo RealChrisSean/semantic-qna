@@ -72,7 +72,7 @@ Prefer a web page over a terminal? Here’s how:
 5. **Open your browser** to <http://localhost:8000> and start asking questions.
 
 6. The included `index.html` uses React (loaded via CDN) so you get a modern UI
-   with a dark/light toggle and a growing history of your queries and results.
+   with a growing history of your queries and results.
 
 
 ## Running Tests

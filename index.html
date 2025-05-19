@@ -7,21 +7,14 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     :root {
-      --bg-light: #fff;
-      --bg-dark: #000;
-      --fg-light: #000;
-      --fg-dark: #fff;
-      --input-bg-light: #f0f0f0;
-      --input-bg-dark: #111;
+      --bg: #fff;
+      --fg: #000;
+      --input-bg: #f0f0f0;
       --accent: #0070f3;
     }
-    [data-theme="light"] {
-      background-color: var(--bg-light);
-      color: var(--fg-light);
-    }
-    [data-theme="dark"] {
-      background-color: var(--bg-dark);
-      color: var(--fg-dark);
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
     }
     html, body {
       margin: 0;
@@ -43,13 +36,6 @@
       display: flex;
       justify-content: flex-end;
       padding: 1rem;
-    }
-    #theme-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.5rem;
-      color: inherit;
     }
     main {
       flex: 1;
@@ -79,12 +65,8 @@
       border: none;
       padding: 0.75rem 1rem;
       font-size: 1rem;
-      background: var(--input-bg-light);
-      color: var(--fg-light);
-    }
-    [data-theme="dark"] .search-container input {
-      background: var(--input-bg-dark);
-      color: var(--fg-dark);
+      background: var(--input-bg);
+      color: var(--fg);
     }
     .search-container button {
       background: var(--accent);
@@ -110,7 +92,7 @@
     }
   </style>
 </head>
-<body data-theme="light">
+<body>
   <div id="root"></div>
 
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -118,13 +100,8 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
     function App() {
-      const [theme, setTheme] = React.useState('light');
       const [q, setQ] = React.useState('');
       const [history, setHistory] = React.useState([]);
-
-      React.useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme);
-      }, [theme]);
 
       const ask = async () => {
         if (!q.trim()) return;
@@ -146,11 +123,7 @@
 
       return (
         <>
-          <header>
-            <button id="theme-toggle" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} aria-label="Toggle theme">
-              {theme === 'light' ? '🌙' : '🌞'}
-            </button>
-          </header>
+          <header></header>
           <main>
             <h1>Semantic FAQ Assistant</h1>
             <div className="search-container">
