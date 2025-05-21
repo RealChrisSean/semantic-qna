@@ -2,11 +2,13 @@
 app.py – minimal Bedrock-to-TiDB semantic Q&A demo
 """
 
-import os, json
+import json
+import os
 from pathlib import Path
-from dotenv import load_dotenv
-import boto3
 from typing import List
+
+import boto3
+from dotenv import load_dotenv
 from tidb_vector.integrations import TiDBVectorClient
 
 # ---------- 0.  Config ---------- #
@@ -38,6 +40,23 @@ def bedrock_embed(text: str) -> List[float]:
     )
     data = json.loads(resp["body"].read())
     return data["embeddingsByType"]["float"]      # 1024-element list
+
+def get_stored_question_text(result):
+    """Extract the stored question text from a query result."""
+    if hasattr(result, "document"):
+        return result.document
+    elif hasattr(result, "text"):
+        return result.text
+    elif hasattr(result, "payload"):
+        return result.payload
+    else:
+        return f"<id {result.id}>"
+
+def get_answer_from_metadata(result):
+    """Extract the answer from the metadata of a query result."""
+    if hasattr(result, "metadata") and result.metadata:
+        return result.metadata.get("answer", "No answer stored.")
+    return "No answer stored."
 
 def ingest_faqs(file_path: str = FAQ_FILE):
     """Create the table and load FAQs from a JSON file."""
@@ -79,17 +98,9 @@ def query_faq(question: str, client=None):
     if not results:
         return {"question": None, "answer": None}
     best = results[0]
-    # Determine stored question text
-    if hasattr(best, "document"):
-        stored_q = best.document
-    elif hasattr(best, "text"):
-        stored_q = best.text
-    elif hasattr(best, "payload"):
-        stored_q = best.payload
-    else:
-        stored_q = f"<id {best.id}>"
-    # Extract answer metadata
-    answer = (best.metadata or {}).get("answer", "No answer stored.")
+    # Extract stored question and answer
+    stored_q = get_stored_question_text(best)
+    answer = get_answer_from_metadata(best)
     return {"question": stored_q, "answer": answer}
 
 # ----------------------------------------- #
@@ -112,24 +123,10 @@ def main() -> None:
             continue
 
         best = top_k[0]
-
-        # Figure out which attribute holds the stored question text
-        if hasattr(best, "document"):
-            stored_q = best.document
-        elif hasattr(best, "text"):
-            stored_q = best.text
-        elif hasattr(best, "payload"):
-            stored_q = best.payload
-        else:
-            stored_q = f"<id {best.id}>"
-
+        stored_q = get_stored_question_text(best)
         print("🎯  Closest stored Q:", stored_q)
-
-        answer = ""
-        if hasattr(best, "metadata") and best.metadata:
-            answer = best.metadata.get("answer", "")
-        if not answer:
-            answer = "No answer stored."
+        
+        answer = get_answer_from_metadata(best)
         print("💡  Answer:", answer)
 
 if __name__ == "__main__":
