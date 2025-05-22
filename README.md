@@ -45,6 +45,18 @@ cp .env.example .env
 - `DATABASE_URL` – TiDB connection string
 - `AWS_REGION` – AWS region for Bedrock (defaults to `us-east-1`)
 - `FAQ_FILE` – path to the FAQ JSON file (defaults to faqs.json)
+
+## 🔍 Using the CLI
+
+After configuring your environment variables and installing dependencies you can
+run the interactive command-line assistant:
+
+```bash
+python app.py
+```
+
+Type a question and you'll get back the closest stored FAQ entry. Enter
+`exit` to quit.
 ---
 
 ## 🌐 Web Interface
