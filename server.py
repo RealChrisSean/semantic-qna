@@ -1,4 +1,4 @@
-# server.py
+"""FastAPI server exposing a simple FAQ query API."""
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from pathlib import Path
@@ -8,6 +8,7 @@ from contextlib import asynccontextmanager
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    """Initialize the TiDB client on startup and yield it for API handlers."""
     global client
     client = ingest_faqs()
     yield
@@ -23,6 +24,7 @@ async def read_index():
 client = None
 
 class QueryReq(BaseModel):
+    """Request payload for the ``/query`` endpoint."""
     question: str
 
 @app.post("/query")
