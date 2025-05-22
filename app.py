@@ -94,7 +94,6 @@ def query_faq(question: str, client=None):
 
 # ----------------------------------------- #
 
-def main() -> None:
     client = ingest_faqs()
     print(f"🚀  Loaded FAQs from {FAQ_FILE}")
 
@@ -104,33 +103,13 @@ def main() -> None:
         if user_q.lower() in {"exit", "quit"}:
             break
 
-        q_vec   = bedrock_embed(user_q)
-        top_k   = client.query(q_vec, k=3)        # returns list of QueryResult
-
-        if not top_k:
+        res = query_faq(user_q, client)
+        if not res["question"]:
             print("🤷  No match found.")
             continue
 
-        best = top_k[0]
-
-        # Figure out which attribute holds the stored question text
-        if hasattr(best, "document"):
-            stored_q = best.document
-        elif hasattr(best, "text"):
-            stored_q = best.text
-        elif hasattr(best, "payload"):
-            stored_q = best.payload
-        else:
-            stored_q = f"<id {best.id}>"
-
-        print("🎯  Closest stored Q:", stored_q)
-
-        answer = ""
-        if hasattr(best, "metadata") and best.metadata:
-            answer = best.metadata.get("answer", "")
-        if not answer:
-            answer = "No answer stored."
-        print("💡  Answer:", answer)
+        print("🎯  Closest stored Q:", res["question"])
+        print("💡  Answer:", res["answer"])
 
 if __name__ == "__main__":
     main()
