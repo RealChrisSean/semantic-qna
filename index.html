@@ -127,7 +127,17 @@
           <main>
             <h1>Semantic FAQ Assistant</h1>
             <div className="search-container">
-              <input value={q} onChange={e => setQ(e.target.value)} placeholder="Ask about TiDB…" />
+              <input
+                value={q}
+                onChange={e => setQ(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    ask();
+                  }
+                }}
+                placeholder="Ask about TiDB…"
+              />
               <button onClick={ask}>Search</button>
             </div>
             <div id="history">
