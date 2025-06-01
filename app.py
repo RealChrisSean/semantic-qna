@@ -94,6 +94,7 @@ def query_faq(question: str, client=None):
 
 # ----------------------------------------- #
 
+def main():
     client = ingest_faqs()
     print(f"🚀  Loaded FAQs from {FAQ_FILE}")
 
