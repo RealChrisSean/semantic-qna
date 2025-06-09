@@ -7,6 +7,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 import boto3
 from typing import List
+from sqlalchemy import text
+from sqlalchemy import create_engine
 from tidb_vector.integrations import TiDBVectorClient
 
 # ---------- 0.  Config ---------- #
@@ -39,26 +41,44 @@ def bedrock_embed(text: str) -> List[float]:
     data = json.loads(resp["body"].read())
     return data["embeddingsByType"]["float"]      # 1024-element list
 
+def batch_embed_batch(texts: List[str]) -> List[List[float]]:
+    """Embed multiple texts in one Titan batch request."""
+    brt = boto3.client("bedrock-runtime", region_name=AWS_REGION)
+    resp = brt.invoke_model(
+        modelId="amazon.titan-embed-text-v2:0",
+        contentType="application/json",
+        accept="application/json",
+        body=json.dumps({"inputTextArray": texts}),
+    )
+    data = json.loads(resp["body"].read())
+    return data["embeddingsByType"]["floatArray"]
+
 def ingest_faqs(file_path: str = FAQ_FILE):
     """Create the table and load FAQs from a JSON file."""
     client = TiDBVectorClient(
         table_name          = TABLE_NAME,
         connection_string   = TIDB_CONN_STR,
         vector_dimension    = VECTOR_DIM,
-        drop_existing_table = True,
+        drop_existing_table = False,
     )
+
+    # Check if the table already has data using a standalone engine
+    engine = create_engine(TIDB_CONN_STR)
+    with engine.connect() as conn:
+        row = conn.execute(text(f"SELECT 1 FROM {TABLE_NAME} LIMIT 1")).first()
+    if row is not None:
+        return client
 
     faq_path = Path(file_path)
     with faq_path.open("r", encoding="utf-8") as f:
         faqs = json.load(f)
 
-    ids, texts, embs, metas = [], [], [], []
-    for row in faqs:
-        q = row["question"]
-        ids.append(row["id"])
-        texts.append(q)
-        embs.append(bedrock_embed(q))
-        metas.append({"answer": row["answer"]})
+    ids   = [row["id"] for row in faqs]
+    texts = [row["question"] for row in faqs]
+    metas = [{"answer": row["answer"]} for row in faqs]
+
+    # Batch embed all questions at once
+    embs = batch_embed_batch(texts)
 
     client.insert(ids=ids, texts=texts, embeddings=embs, metadatas=metas)
     return client
