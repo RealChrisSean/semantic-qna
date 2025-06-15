@@ -22,9 +22,6 @@ AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
 _BEDROCK_CLIENT = boto3.client("bedrock-runtime", region_name=AWS_REGION)
 _EMBED_CACHE: dict[str, list[float]] = {}
 
-# minimum similarity score to accept a match
-SIMILARITY_THRESHOLD: float = 0.75
-
 
 TIDB_CONN_STR = os.getenv("DATABASE_URL")
 
@@ -133,11 +130,6 @@ def query_by_vec(q_vec: list[float], client):
     if not results:
         return {"question": None, "answer": None}
     best = results[0]
-    # if similarity score is too low, treat as no match
-    if hasattr(best, "score") and best.score < SIMILARITY_THRESHOLD:
-        return {"question": None, "answer": None}
-    if hasattr(best, "distance") and best.distance > (1 - SIMILARITY_THRESHOLD):
-        return {"question": None, "answer": None}
     if hasattr(best, "document"):
         stored_q = best.document
     elif hasattr(best, "text"):
