@@ -98,5 +98,505 @@
   { "id": "97", "question": "Can I change my email address on my account?",                   "answer": "Yes—log in, go to 'Profile', and click 'Edit' next to your email." },
   { "id": "98", "question": "How do I opt in or out of SMS notifications?",                   "answer": "Text STOP to unsubscribe anytime or manage preferences in your account." },
   { "id": "99", "question": "What do I do if I receive the wrong item?",                      "answer": "Contact support with photos; we’ll send a prepaid label and ship the correct item ASAP." },
-  { "id": "100","question": "Can I combine store credit with a promo code?",                  "answer": "Yes—store credit applies first, and then you can add one promo code." }
+  { "id": "100","question": "Can I combine store credit with a promo code?",                  "answer": "Yes—store credit applies first, and then you can add one promo code." },
+  {
+    "id": "101",
+    "question": "Why did my payment take longer than expected?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "102",
+    "question": "How can I returns for my recent purchase?",
+    "answer": "To return an item, use the returns portal in your account dashboard and follow the on-screen instructions."
+  },
+  {
+    "id": "103",
+    "question": "How can I international shipping for my recent purchase?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "104",
+    "question": "Why did my order status take longer than expected?",
+    "answer": "You can check your order status by logging into your account and visiting the 'Orders' section."
+  },
+  {
+    "id": "105",
+    "question": "Can I get help with shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "106",
+    "question": "Why did my sustainability take longer than expected?",
+    "answer": "We use recycled and eco-friendly materials for packaging and offset carbon emissions."
+  },
+  {
+    "id": "107",
+    "question": "Where do I find information on size guide?",
+    "answer": "Our size guide is linked on every product page; measurements are provided in inches and cm."
+  },
+  {
+    "id": "108",
+    "question": "How can I payment for my recent purchase?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "109",
+    "question": "Can I get help with warranty?",
+    "answer": "Our products come with a one-year warranty; contact support with your order number for claims."
+  },
+  {
+    "id": "110",
+    "question": "How can I shipping for my recent purchase?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "111",
+    "question": "Why did my account take longer than expected?",
+    "answer": "Manage your account details from the 'Profile' page after logging in, including email and password."
+  },
+  {
+    "id": "112",
+    "question": "Can I get help with account?",
+    "answer": "Manage your account details from the 'Profile' page after logging in, including email and password."
+  },
+  {
+    "id": "113",
+    "question": "What is the process for payment?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "114",
+    "question": "Can I get help with sustainability?",
+    "answer": "We use recycled and eco-friendly materials for packaging and offset carbon emissions."
+  },
+  {
+    "id": "115",
+    "question": "Where do I find information on sustainability?",
+    "answer": "We use recycled and eco-friendly materials for packaging and offset carbon emissions."
+  },
+  {
+    "id": "116",
+    "question": "Can I get help with order status?",
+    "answer": "You can check your order status by logging into your account and visiting the 'Orders' section."
+  },
+  {
+    "id": "117",
+    "question": "Where do I find information on payment?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "118",
+    "question": "Where do I find information on international shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "119",
+    "question": "What is the process for shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "120",
+    "question": "What is the process for shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "121",
+    "question": "Why did my account take longer than expected?",
+    "answer": "Manage your account details from the 'Profile' page after logging in, including email and password."
+  },
+  {
+    "id": "122",
+    "question": "What is the process for order status?",
+    "answer": "You can check your order status by logging into your account and visiting the 'Orders' section."
+  },
+  {
+    "id": "123",
+    "question": "How can I shipping for my recent purchase?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "124",
+    "question": "Where do I find information on returns?",
+    "answer": "To return an item, use the returns portal in your account dashboard and follow the on-screen instructions."
+  },
+  {
+    "id": "125",
+    "question": "What is the process for international shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "126",
+    "question": "How can I order status for my recent purchase?",
+    "answer": "You can check your order status by logging into your account and visiting the 'Orders' section."
+  },
+  {
+    "id": "127",
+    "question": "Can I get help with international shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "128",
+    "question": "Can I get help with order status?",
+    "answer": "You can check your order status by logging into your account and visiting the 'Orders' section."
+  },
+  {
+    "id": "129",
+    "question": "Where do I find information on sustainability?",
+    "answer": "We use recycled and eco-friendly materials for packaging and offset carbon emissions."
+  },
+  {
+    "id": "130",
+    "question": "How can I shipping for my recent purchase?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "131",
+    "question": "How can I discounts for my recent purchase?",
+    "answer": "Discount codes can be applied at checkout; only one promotional code is valid per order."
+  },
+  {
+    "id": "132",
+    "question": "Why did my size guide take longer than expected?",
+    "answer": "Our size guide is linked on every product page; measurements are provided in inches and cm."
+  },
+  {
+    "id": "133",
+    "question": "Why did my account take longer than expected?",
+    "answer": "Manage your account details from the 'Profile' page after logging in, including email and password."
+  },
+  {
+    "id": "134",
+    "question": "Can I get help with order status?",
+    "answer": "You can check your order status by logging into your account and visiting the 'Orders' section."
+  },
+  {
+    "id": "135",
+    "question": "How can I international shipping for my recent purchase?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "136",
+    "question": "Why did my account take longer than expected?",
+    "answer": "Manage your account details from the 'Profile' page after logging in, including email and password."
+  },
+  {
+    "id": "137",
+    "question": "How can I size guide for my recent purchase?",
+    "answer": "Our size guide is linked on every product page; measurements are provided in inches and cm."
+  },
+  {
+    "id": "138",
+    "question": "Can I get help with returns?",
+    "answer": "To return an item, use the returns portal in your account dashboard and follow the on-screen instructions."
+  },
+  {
+    "id": "139",
+    "question": "Where do I find information on shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "140",
+    "question": "What is the process for account?",
+    "answer": "Manage your account details from the 'Profile' page after logging in, including email and password."
+  },
+  {
+    "id": "141",
+    "question": "How can I account for my recent purchase?",
+    "answer": "Manage your account details from the 'Profile' page after logging in, including email and password."
+  },
+  {
+    "id": "142",
+    "question": "Can I get help with payment?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "143",
+    "question": "Why did my account take longer than expected?",
+    "answer": "Manage your account details from the 'Profile' page after logging in, including email and password."
+  },
+  {
+    "id": "144",
+    "question": "Can I get help with international shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "145",
+    "question": "Can I get help with sustainability?",
+    "answer": "We use recycled and eco-friendly materials for packaging and offset carbon emissions."
+  },
+  {
+    "id": "146",
+    "question": "Where do I find information on shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "147",
+    "question": "How can I returns for my recent purchase?",
+    "answer": "To return an item, use the returns portal in your account dashboard and follow the on-screen instructions."
+  },
+  {
+    "id": "148",
+    "question": "Why did my payment take longer than expected?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "149",
+    "question": "What is the process for international shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "150",
+    "question": "Why did my payment take longer than expected?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "151",
+    "question": "How can I international shipping for my recent purchase?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "152",
+    "question": "Can I get help with sustainability?",
+    "answer": "We use recycled and eco-friendly materials for packaging and offset carbon emissions."
+  },
+  {
+    "id": "153",
+    "question": "How can I account for my recent purchase?",
+    "answer": "Manage your account details from the 'Profile' page after logging in, including email and password."
+  },
+  {
+    "id": "154",
+    "question": "Where do I find information on size guide?",
+    "answer": "Our size guide is linked on every product page; measurements are provided in inches and cm."
+  },
+  {
+    "id": "155",
+    "question": "What is the process for order status?",
+    "answer": "You can check your order status by logging into your account and visiting the 'Orders' section."
+  },
+  {
+    "id": "156",
+    "question": "Can I get help with returns?",
+    "answer": "To return an item, use the returns portal in your account dashboard and follow the on-screen instructions."
+  },
+  {
+    "id": "157",
+    "question": "What is the process for international shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "158",
+    "question": "What is the process for returns?",
+    "answer": "To return an item, use the returns portal in your account dashboard and follow the on-screen instructions."
+  },
+  {
+    "id": "159",
+    "question": "Can I get help with payment?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "160",
+    "question": "Where do I find information on returns?",
+    "answer": "To return an item, use the returns portal in your account dashboard and follow the on-screen instructions."
+  },
+  {
+    "id": "161",
+    "question": "Can I get help with shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "162",
+    "question": "What is the process for warranty?",
+    "answer": "Our products come with a one-year warranty; contact support with your order number for claims."
+  },
+  {
+    "id": "163",
+    "question": "Why did my sustainability take longer than expected?",
+    "answer": "We use recycled and eco-friendly materials for packaging and offset carbon emissions."
+  },
+  {
+    "id": "164",
+    "question": "What is the process for warranty?",
+    "answer": "Our products come with a one-year warranty; contact support with your order number for claims."
+  },
+  {
+    "id": "165",
+    "question": "Where do I find information on warranty?",
+    "answer": "Our products come with a one-year warranty; contact support with your order number for claims."
+  },
+  {
+    "id": "166",
+    "question": "What is the process for size guide?",
+    "answer": "Our size guide is linked on every product page; measurements are provided in inches and cm."
+  },
+  {
+    "id": "167",
+    "question": "Where do I find information on returns?",
+    "answer": "To return an item, use the returns portal in your account dashboard and follow the on-screen instructions."
+  },
+  {
+    "id": "168",
+    "question": "Can I get help with payment?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "169",
+    "question": "What is the process for size guide?",
+    "answer": "Our size guide is linked on every product page; measurements are provided in inches and cm."
+  },
+  {
+    "id": "170",
+    "question": "How can I size guide for my recent purchase?",
+    "answer": "Our size guide is linked on every product page; measurements are provided in inches and cm."
+  },
+  {
+    "id": "171",
+    "question": "What is the process for shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "172",
+    "question": "What is the process for warranty?",
+    "answer": "Our products come with a one-year warranty; contact support with your order number for claims."
+  },
+  {
+    "id": "173",
+    "question": "Can I get help with account?",
+    "answer": "Manage your account details from the 'Profile' page after logging in, including email and password."
+  },
+  {
+    "id": "174",
+    "question": "Why did my international shipping take longer than expected?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "175",
+    "question": "Where do I find information on size guide?",
+    "answer": "Our size guide is linked on every product page; measurements are provided in inches and cm."
+  },
+  {
+    "id": "176",
+    "question": "Can I get help with order status?",
+    "answer": "You can check your order status by logging into your account and visiting the 'Orders' section."
+  },
+  {
+    "id": "177",
+    "question": "How can I warranty for my recent purchase?",
+    "answer": "Our products come with a one-year warranty; contact support with your order number for claims."
+  },
+  {
+    "id": "178",
+    "question": "What is the process for size guide?",
+    "answer": "Our size guide is linked on every product page; measurements are provided in inches and cm."
+  },
+  {
+    "id": "179",
+    "question": "Why did my discounts take longer than expected?",
+    "answer": "Discount codes can be applied at checkout; only one promotional code is valid per order."
+  },
+  {
+    "id": "180",
+    "question": "Why did my account take longer than expected?",
+    "answer": "Manage your account details from the 'Profile' page after logging in, including email and password."
+  },
+  {
+    "id": "181",
+    "question": "What is the process for returns?",
+    "answer": "To return an item, use the returns portal in your account dashboard and follow the on-screen instructions."
+  },
+  {
+    "id": "182",
+    "question": "Where do I find information on returns?",
+    "answer": "To return an item, use the returns portal in your account dashboard and follow the on-screen instructions."
+  },
+  {
+    "id": "183",
+    "question": "Can I get help with international shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "184",
+    "question": "What is the process for shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "185",
+    "question": "Why did my shipping take longer than expected?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "186",
+    "question": "Can I get help with payment?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "187",
+    "question": "Where do I find information on payment?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "188",
+    "question": "Where do I find information on order status?",
+    "answer": "You can check your order status by logging into your account and visiting the 'Orders' section."
+  },
+  {
+    "id": "189",
+    "question": "Can I get help with warranty?",
+    "answer": "Our products come with a one-year warranty; contact support with your order number for claims."
+  },
+  {
+    "id": "190",
+    "question": "How can I size guide for my recent purchase?",
+    "answer": "Our size guide is linked on every product page; measurements are provided in inches and cm."
+  },
+  {
+    "id": "191",
+    "question": "Where do I find information on warranty?",
+    "answer": "Our products come with a one-year warranty; contact support with your order number for claims."
+  },
+  {
+    "id": "192",
+    "question": "Can I get help with payment?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "193",
+    "question": "Why did my discounts take longer than expected?",
+    "answer": "Discount codes can be applied at checkout; only one promotional code is valid per order."
+  },
+  {
+    "id": "194",
+    "question": "How can I payment for my recent purchase?",
+    "answer": "You can update or change your payment method under 'Payment Options' in your account settings."
+  },
+  {
+    "id": "195",
+    "question": "Can I get help with international shipping?",
+    "answer": "Shipping times vary by location; standard shipping takes 3-5 business days after dispatch."
+  },
+  {
+    "id": "196",
+    "question": "Where do I find information on discounts?",
+    "answer": "Discount codes can be applied at checkout; only one promotional code is valid per order."
+  },
+  {
+    "id": "197",
+    "question": "Where do I find information on warranty?",
+    "answer": "Our products come with a one-year warranty; contact support with your order number for claims."
+  },
+  {
+    "id": "198",
+    "question": "Can I get help with returns?",
+    "answer": "To return an item, use the returns portal in your account dashboard and follow the on-screen instructions."
+  },
+  {
+    "id": "199",
+    "question": "Why did my discounts take longer than expected?",
+    "answer": "Discount codes can be applied at checkout; only one promotional code is valid per order."
+  },
+  {
+    "id": "200",
+    "question": "What is the process for discounts?",
+    "answer": "Discount codes can be applied at checkout; only one promotional code is valid per order."
+  }
 ]

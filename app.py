@@ -10,11 +10,21 @@ from typing import List
 from sqlalchemy import text
 from sqlalchemy import create_engine
 from tidb_vector.integrations import TiDBVectorClient
+import time
+
 
 # ---------- 0.  Config ---------- #
 load_dotenv()                                  # loads .env
 
 AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
+
+# reuse Bedrock client and cache embeddings
+_BEDROCK_CLIENT = boto3.client("bedrock-runtime", region_name=AWS_REGION)
+_EMBED_CACHE: dict[str, list[float]] = {}
+
+# minimum similarity score to accept a match
+SIMILARITY_THRESHOLD: float = 0.75
+
 
 TIDB_CONN_STR = os.getenv("DATABASE_URL")
 
@@ -25,21 +35,24 @@ FAQ_FILE = os.getenv("FAQ_FILE", "faqs.json")  # FAQ data in JSON format
 
 # optional: show which AWS creds boto3 is using
 sts = boto3.client("sts", region_name=AWS_REGION)
-print("🔑  Using AWS identity:", sts.get_caller_identity()["Arn"])
+print("🔑  Using AWS identity: <SECRET>")
 
 # ---------- 1.  Bedrock helper ---------- #
 def bedrock_embed(text: str) -> List[float]:
     """Call AWS Bedrock to generate Titan-2 embeddings and return 1024 floats."""
-    brt = boto3.client("bedrock-runtime", region_name=AWS_REGION)
+    if text in _EMBED_CACHE:
+        return _EMBED_CACHE[text]
     payload = json.dumps({"inputText": text})
-    resp = brt.invoke_model(
+    resp = _BEDROCK_CLIENT.invoke_model(
         modelId="amazon.titan-embed-text-v2:0",
         contentType="application/json",
         accept="application/json",
         body=payload,
     )
     data = json.loads(resp["body"].read())
-    return data["embeddingsByType"]["float"]      # 1024-element list
+    vec = data["embeddingsByType"]["float"]
+    _EMBED_CACHE[text] = vec
+    return vec
 
 def batch_embed_batch(texts: List[str]) -> List[List[float]]:
     """Embed multiple texts in one Titan batch request."""
@@ -112,6 +125,30 @@ def query_faq(question: str, client=None):
     answer = (best.metadata or {}).get("answer", "No answer stored.")
     return {"question": stored_q, "answer": answer}
 
+def query_by_vec(q_vec: list[float], client):
+    """
+    Given an embedding vector, query TiDB and extract the best question/answer.
+    """
+    results = client.query(q_vec, k=1)
+    if not results:
+        return {"question": None, "answer": None}
+    best = results[0]
+    # if similarity score is too low, treat as no match
+    if hasattr(best, "score") and best.score < SIMILARITY_THRESHOLD:
+        return {"question": None, "answer": None}
+    if hasattr(best, "distance") and best.distance > (1 - SIMILARITY_THRESHOLD):
+        return {"question": None, "answer": None}
+    if hasattr(best, "document"):
+        stored_q = best.document
+    elif hasattr(best, "text"):
+        stored_q = best.text
+    elif hasattr(best, "payload"):
+        stored_q = best.payload
+    else:
+        stored_q = f"<id {best.id}>"
+    answer = (best.metadata or {}).get("answer", "No answer stored.")
+    return {"question": stored_q, "answer": answer}
+
 # ----------------------------------------- #
 
 def main():
@@ -124,13 +161,29 @@ def main():
         if user_q.lower() in {"exit", "quit"}:
             break
 
-        res = query_faq(user_q, client)
+        total_start = time.perf_counter()
+
+        # embed timing
+        embed_start = time.perf_counter()
+        q_vec = bedrock_embed(user_q)
+        embed_elapsed = time.perf_counter() - embed_start
+
+        # query timing
+        query_start = time.perf_counter()
+        res = query_by_vec(q_vec, client)
+        query_elapsed = time.perf_counter() - query_start
+
+        total_elapsed = time.perf_counter() - total_start
+
         if not res["question"]:
             print("🤷  No match found.")
             continue
 
         print("🎯  Closest stored Q:", res["question"])
         print("💡  Answer:", res["answer"])
+        print(f"⏱  Embed time: {embed_elapsed:.4f} seconds")
+        print(f"⏱  Query time: {query_elapsed:.4f} seconds")
+        print(f"⏱  Total time: {total_elapsed:.4f} seconds")
 
 if __name__ == "__main__":
     main()
