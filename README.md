@@ -1,6 +1,6 @@
 # Semantic FAQ CLI
 
-Think of this as your go-to command-line buddy that fetches answers based on what you *mean*—not just the exact words you type. Under the hood, it taps into [TiDB Cloud’s](https://auth.tidbcloud.com/login) vector columns and [AWS Bedrock Titan-V2 embeddings](https://docs.aws.amazon.com/bedrock/latest/userguide/titan-embedding-models.html), all wrapped up in pure Python.
+Think of this as your go-to command-line buddy that fetches answers based on what you *mean* not just the exact words you type. Under the hood, it taps into [TiDB Cloud’s](https://auth.tidbcloud.com/login) vector columns and [AWS Bedrock Titan-V2 embeddings](https://docs.aws.amazon.com/bedrock/latest/userguide/titan-embedding-models.html), all wrapped up in pure Python.
 
 ---
 
@@ -10,13 +10,13 @@ Think of this as your go-to command-line buddy that fetches answers based on wha
   Store question embeddings in TiDB and let vector lookups do the heavy lifting.
 
 - **Raw Bedrock power**  
-  No LangChain wrappers—just straight JSON calls so you see exactly what Titan-V2 returns.
+  No LangChain wrappers, just straight JSON calls so you see exactly what Titan-V2 returns.
 
 - **Serverless-ready**  
   A free TiDB Serverless cluster and AWS keys are all you need to get started.
 
 - **Pure Python CLI**  
-  Fire it up, ask a question, get an answer—no extra services required.
+  Fire it up, ask a question, get an answer. No extra services required.
 
 ---
 
